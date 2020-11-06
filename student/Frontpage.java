@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -12,27 +15,32 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import ALumni.Frame;
 import Chat.Client;
+import Chat.Server;
 import beanclasses.Bean;
 import package1.Alumni_Signin;
 import package1.Database;
 import package1.EmailValidation;
-import package1.Signin;
+
 import beanclasses.RegBean;
 
 public class Frontpage extends javax.swing.JFrame {
-
+	RegBean rgb=new RegBean();
 	public Frontpage() throws SQLException {
 		initComponents();
 		  Toolkit t=getToolkit();
 	        Dimension size=t.getScreenSize();
 	        setLocation(size.width/2-getWidth()/2,size.height/2-getHeight()/2);
-	    	RegBean rg2 = new RegBean();
-			rg2.setEmail(Signin.email.getText().toLowerCase());
-			Database db = new Database();
-			db.alumni_profile(rg2);
-			name_txt.setText(rg2.getName());
+	 	   
+		    Database dbc=new Database();
+		    dbc.get_name(rgb,Alumni_Signin.email.getText(),1);
 	}
+
+	Bean r1=new Bean();
+	Bean r2=new Bean();
+	Bean r3=new Bean();
+	
 
 	private void initComponents() {
 
@@ -123,7 +131,13 @@ public class Frontpage extends javax.swing.JFrame {
 		chat_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 115, 87), 2, true));
 		chat_btn.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				chat_btnActionPerformed(evt);
+				try {
+					chat_btnActionPerformed(evt);
+				
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -162,7 +176,7 @@ public class Frontpage extends javax.swing.JFrame {
 
 		jLabel1.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
 		jLabel1.setForeground(new java.awt.Color(240, 240, 240));
-		jLabel1.setText("Alumni");
+		jLabel1.setText("Student");
 
 		jLabel2.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
 		jLabel2.setForeground(new java.awt.Color(240, 240, 240));
@@ -273,7 +287,9 @@ public class Frontpage extends javax.swing.JFrame {
 	        res_label.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 	        res_label.addMouseListener(new java.awt.event.MouseAdapter() {
 	            public void mouseClicked(java.awt.event.MouseEvent evt) {
-Frame obj=new Frame();
+	            	if((res_label.getText().toString().equals(null))) {
+	            	}else {
+	            	Frame obj=new Frame();
 	        		
 	        		obj.name_field.setText(r2.getName());
 	        		obj.contact_field.setText((String) r2.getPhone());
@@ -281,7 +297,7 @@ Frame obj=new Frame();
 	        		obj.field_field.setText((String) r2.getField());
 	        		obj.dep_field.setText((String) r2.getDep());
 	        		obj.setVisible(true);
-	            }
+	            }}
 
 	        });
 
@@ -298,7 +314,8 @@ Frame obj=new Frame();
 	        res_label2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 	        res_label2.addMouseListener(new java.awt.event.MouseAdapter() {
 	            public void mouseClicked(java.awt.event.MouseEvent evt) {
-	            	Frame obj=new Frame();
+	            	if((res_label2.getText().toString().equals(null))) {}
+	            	else{Frame obj=new Frame();
 	        		
 	        		obj.name_field.setText(r1.getName());
 	        		obj.contact_field.setText((String) r1.getPhone());
@@ -306,7 +323,7 @@ Frame obj=new Frame();
 	        		obj.field_field.setText((String) r1.getField());
 	        		obj.dep_field.setText((String) r1.getDep());
 	        		obj.setVisible(true);
-	            }
+	            }}
 	          
 	        });
 
@@ -349,14 +366,10 @@ Frame obj=new Frame();
 	        );
 
 	}
-
-	Bean r1=new Bean();
-	Bean r2=new Bean();
-	Bean r3=new Bean();
-	
 	protected void res_label3MouseClicked(MouseEvent evt) {
+
+		if((res_label3.getText().toString().equals(null))) {}else {
 Frame obj=new Frame();
-		
 		obj.name_field.setText(r3.getName());
 		obj.contact_field.setText((String) r3.getPhone());
 		obj.email_field.setText((String) r3.getEmail());
@@ -364,7 +377,7 @@ Frame obj=new Frame();
 		obj.dep_field.setText((String) r3.getDep());
 		obj.setVisible(true);
 		
-	}
+	}}
 
 
 	public void init_profile() {
@@ -397,9 +410,9 @@ Frame obj=new Frame();
 		profile3.setForeground(new java.awt.Color(255, 255, 255));
 		profile3.setText("Email");
 
-		profile4.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
+		profile4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
 		profile4.setForeground(new java.awt.Color(255, 255, 255));
-		profile4.setText("Job Status");
+		profile4.setText("Dream COmpany");
 
 		profile5.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
 		profile5.setForeground(new java.awt.Color(255, 255, 255));
@@ -615,10 +628,9 @@ Frame obj=new Frame();
 		name_txt.setText(rg.getName());
 		phone_txt.setText(rg.getPhone());
 		email_txt.setText(rg.getEmail());
-	//	System.out.println(rg.getPlacement());
-	
-	 
-	 job_txt.setText("dream Company" + rg.getCompany());
+		
+			job_txt.setText(  rg.getCompany());
+		
 		year_txt.setText(rg.getYear());
 	}
 
@@ -636,18 +648,18 @@ Frame obj=new Frame();
 		String newpass = newpass_txt.getText();
 		Database db = new Database();
 
-		rg1.setEmail(Signin.email.getText());
-		db.get_password(rg1);
+		rg1.setEmail(Alumni_Signin.email.getText());
+		db.get_password_st(rg1);
 
 		if (!(rg1.getPassword().equals(oldpass))) {
 			JOptionPane.showMessageDialog(new JFrame(), "Password do not match");
 		} else if (rg1.getPassword().equals(oldpass)) {
 			rg1.setPassword(newpass);
-			rg1.setEmail(Signin.email.getText());
+			rg1.setEmail(Alumni_Signin.email.getText());
 			EmailValidation e = new EmailValidation();
 			if (e.passisvalid(newpass)) {
 
-				db.update_password(rg1);
+				db.update_password(rg1,1);
 				JOptionPane.showMessageDialog(new JFrame(), "Password changed");
 				rg1.setPassword(newpass);
 				oldpass_txt.setText(null);
@@ -663,10 +675,20 @@ Frame obj=new Frame();
 
 	}
 
-	private void chat_btnActionPerformed(java.awt.event.ActionEvent evt) {
-new Client("Student_"+name_txt.getText());
-new Client().setVisible(true);
-this.setVisible(false);
+	private void chat_btnActionPerformed(java.awt.event.ActionEvent evt) throws Exception {
+		try {
+		
+		Client c=new Client();
+		Thread t11=new Thread(c);
+			t11.start();
+		String str="Student_"+rgb.getName();
+		c.Name(str);
+		c.setVisible(true);
+		
+	}catch(Exception e) {
+
+       
+	}
 	}
 
 	private void job_btnActionPerformed(java.awt.event.ActionEvent evt) {
@@ -674,9 +696,9 @@ this.setVisible(false);
 	}
 
 	private void search_btnActionPerformed(java.awt.event.ActionEvent evt) {
-		name_txt.setText(null);
+		
 		inint_search();
-	
+		
 	}
 
 	private void searchActionPerformed(ActionEvent evt) throws SQLException {
@@ -686,13 +708,15 @@ this.setVisible(false);
 	try {	Database db = new Database();
 		RegBean rg = new RegBean();
 		ArrayList<String[]> l = new ArrayList<>();
+		l.clear();
 	
 		rg.setName(name_field.getText());
 		if (radio_alumni.isSelected()) {
-
+			l.clear();
 			l = db.search_fun(rg, 1);
 
-		} else if (radio_student.isSelected()) {
+		} else  {
+			l.clear();
 			l = db.search_fun(rg, 0);
 
 		}
@@ -700,36 +724,47 @@ this.setVisible(false);
 		 String arr[] = null;
 		 String arr0[]=null;
 		
-		//System.out.println(l);
-		
+		 if(l.size()==0) { JOptionPane.showMessageDialog(new JFrame(),"NO User Found Please try Again"); 
+		   }
+		 else {
 		  if (l.size() == 1) {
 		  
-		  arr0= l.get(0); res_label2.setText(arr0[0] + "   " + arr0[4]);
+		  arr0= l.get(0); 
+		  res_label2.setText(arr0[0] + "   " + arr0[4]);
+		  r1.setPhone(arr0[1]); r1.setEmail(arr0[2]); r1.setField(arr0[3]);
+		  r1.setDep(arr0[4]);
+		  r1.setName(arr0[0]);
 		  }
 			
-			  if(l.size()==2) { arr0= l.get(0); res_label2.setText(arr0[0] + "   " +
+		  else if(l.size()==2) { arr0= l.get(0); res_label2.setText(arr0[0] + "   " +
 			  arr0[4]); arr1=l.get(1);
 			  
 			  res_label.setText(arr1[0]+"   "+ arr1[4]);
+			  r2.setName(arr1[0]); r2.setPhone(arr1[1]); r2.setEmail(arr1[2]);
+			  r2.setField(arr1[3]); r2.setDep(arr1[4]); r1.setName(arr0[0]);
+			  r1.setPhone(arr0[1]); r1.setEmail(arr0[2]); r1.setField(arr0[3]);
+			  r1.setDep(arr0[4]);
 			  
-			  } if(l.size()>2) { arr0= l.get(0); res_label2.setText(arr0[0] + "   " +
+			  }else if(l.size()>2) { arr0= l.get(0); res_label2.setText(arr0[0] + "   " +
 			  arr0[4]); arr1=l.get(1);
 			  
 			  res_label.setText(arr1[0]+"   "+ arr1[4]); arr=l.get(2);
 			  
 			  
 			  res_label3.setText(arr[0]+"   "+ arr[4]);
-			  
-			  }
-			  if(l.size()==0) { JOptionPane.showMessageDialog(new
-			  JFrame(),"NO User Found Please try Again"); inint_search(); }
-			
 			  r2.setName(arr1[0]); r2.setPhone(arr1[1]); r2.setEmail(arr1[2]);
 			  r2.setField(arr1[3]); r2.setDep(arr1[4]); r1.setName(arr0[0]);
 			  r1.setPhone(arr0[1]); r1.setEmail(arr0[2]); r1.setField(arr0[3]);
 			  r1.setDep(arr0[4]); r3.setName(arr[0]); r3.setPhone(arr[1]);
 			  r3.setEmail(arr[2]); r3.setField(arr[3]); r3.setDep(arr[4]);
-			 
+			  
+			  }
+		 
+		
+	  System.out.println(r1.getDep()+" "+r1.getEmail());
+	  System.out.println(r2.getDep()+" "+r2.getEmail());
+	  System.out.println(r3.getDep()+" "+r3.getEmail());
+		 }	 
 	}
 	catch(Exception e){
 		
@@ -911,9 +946,9 @@ this.setVisible(false);
 	private javax.swing.JLabel jLabel5;
 	private javax.swing.JLabel jLabel3;
 	private javax.swing.JLabel jLabel4;
-	private javax.swing.JLabel res_label;
-	private javax.swing.JLabel res_label2;
-	private javax.swing.JLabel res_label3;
+	private javax.swing.JLabel res_label=null;
+	private javax.swing.JLabel res_label2=null;
+	private javax.swing.JLabel res_label3=null;
 	public javax.swing.JLabel year_txt;
 	// End of variables declaration
 }

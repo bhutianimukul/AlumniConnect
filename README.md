@@ -11,3 +11,4 @@ Socket Programming
 ![Registration screen](https://raw.githubusercontent.com/bhutianimukul/AlumniConnect/main/previewimages/reg.PNG)
 ![dashboard](https://raw.githubusercontent.com/bhutianimukul/AlumniConnect/main/previewimages/dash.PNG)
 ![Chat screen](https://raw.githubusercontent.com/bhutianimukul/AlumniConnect/main/previewimages/chat.PNG)
+![chat](https://github.com/bhutianimukul/AlumniConnect/blob/main/previewimages/chat1.PNG)

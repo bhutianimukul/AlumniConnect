@@ -12,3 +12,5 @@ Socket Programming
 ![dashboard](https://raw.githubusercontent.com/bhutianimukul/AlumniConnect/main/previewimages/dash.PNG)
 ![Chat screen](https://raw.githubusercontent.com/bhutianimukul/AlumniConnect/main/previewimages/chat.PNG)
 ![chat](https://github.com/bhutianimukul/AlumniConnect/blob/main/previewimages/chat1.PNG)
+![jobpost alumni](https://raw.githubusercontent.com/bhutianimukul/AlumniConnect/main/Images/jobpost.PNG)
+![jobpost student](https://raw.githubusercontent.com/bhutianimukul/AlumniConnect/main/Images/jobpost1.PNG)
